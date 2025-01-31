@@ -31,6 +31,11 @@ class User extends Authenticatable
         return $this->hasMany(Borrowing::class);
     }
 
+    public function fines(): HasMany
+    {
+        return $this->hasMany(Fine::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
