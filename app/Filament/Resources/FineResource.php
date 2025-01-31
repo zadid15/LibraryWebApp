@@ -23,7 +23,7 @@ class FineResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
 
-    protected static ?string $navigationGroup = 'Library Management';
+    protected static ?string $navigationGroup = 'Penalties & Fines';
 
     public static function form(Form $form): Form
     {
@@ -98,7 +98,6 @@ class FineResource extends Resource
                 Tables\Actions\EditAction::make()
                     ->label('Edit')
                     ->color('warning')
-                    ->button()
                     ->icon('heroicon-m-pencil-square')
                     ->iconPosition(IconPosition::After),
             ])

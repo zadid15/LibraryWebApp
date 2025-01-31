@@ -25,7 +25,7 @@ class BorrowingResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
 
-    protected static ?string $navigationGroup = 'Library Management';
+    protected static ?string $navigationGroup = 'Transactions';
 
     public static function form(Form $form): Form
     {
@@ -113,12 +113,10 @@ class BorrowingResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()
-                    ->button()
-                    ->color('info')
+                    ->color('gray')
                     ->label('View Detail')
                     ->iconPosition(IconPosition::After),
                 Tables\Actions\EditAction::make()
-                    ->button()
                     ->color('warning')
                     ->label('Edit')
                     ->iconPosition(IconPosition::After),

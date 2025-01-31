@@ -2,25 +2,24 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\CategoryResource\Pages;
-use App\Filament\Resources\CategoryResource\RelationManagers;
-use App\Models\Category;
+use App\Filament\Resources\BookCategoryResource\Pages;
+use App\Filament\Resources\BookCategoryResource\RelationManagers;
+use App\Models\BookCategory;
 use Filament\Forms;
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Support\Enums\IconPosition;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class CategoryResource extends Resource
+class BookCategoryResource extends Resource
 {
-    protected static ?string $model = Category::class;
+    protected static ?string $model = BookCategory::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
 
     protected static ?string $navigationGroup = 'Books & Categories';
 
@@ -29,9 +28,14 @@ class CategoryResource extends Resource
         return $form
             ->schema([
                 //
-                TextInput::make('name')
+                Select::make('book_id')
+                    ->label('Book Title')
+                    ->relationship('book', 'title')
+                    ->searchable(),
+
+                Select::make('category_id')
                     ->label('Category Name')
-                    ->required()
+                    ->relationship('category', 'name'),
             ]);
     }
 
@@ -40,7 +44,10 @@ class CategoryResource extends Resource
         return $table
             ->columns([
                 //
-                TextColumn::make('name')
+                TextColumn::make('book.title')
+                    ->label('Book Title')
+                    ->searchable(),
+                TextColumn::make('category.name')
                     ->label('Category Name')
                     ->searchable(),
             ])
@@ -48,11 +55,7 @@ class CategoryResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make()
-                    ->label('Edit')
-                    ->color('warning')
-                    ->icon('heroicon-m-pencil-square')
-                    ->iconPosition(IconPosition::After),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -71,9 +74,9 @@ class CategoryResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCategories::route('/'),
-            'create' => Pages\CreateCategory::route('/create'),
-            'edit' => Pages\EditCategory::route('/{record}/edit'),
+            'index' => Pages\ListBookCategories::route('/'),
+            'create' => Pages\CreateBookCategory::route('/create'),
+            'edit' => Pages\EditBookCategory::route('/{record}/edit'),
         ];
     }
 }
