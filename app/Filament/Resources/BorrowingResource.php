@@ -12,6 +12,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\IconPosition;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -62,9 +63,9 @@ class BorrowingResource extends Resource
                 Select::make('status')
                     ->label('Status')
                     ->options([
-                        'borrowed' => 'Dipinjam',
-                        'returned' => 'Dikembalikan',
-                        'overdue' => 'Terlambat',
+                        'borrowed' => 'Borrowed',
+                        'returned' => 'Returned',
+                        'overdue' => 'Overdue',
                     ])
                     ->default('borrowed')
                     ->required(),
@@ -90,14 +91,37 @@ class BorrowingResource extends Resource
 
 
                 TextColumn::make('status')
-                    ->label('Status'),
+                    ->label('Status')
+                    ->badge()
+                    ->formatStateUsing(function ($state) {
+                        // Format teks status
+                        return match ($state) {
+                            'borrowed' => 'Borrowed',
+                            'returned' => 'Returned',
+                            'overdue' => 'Overdue',
+                            default => $state, // Default jika nilai tidak sesuai
+                        };
+                    })
+                    ->colors([
+                        'info' => 'borrowed',
+                        'success' => 'returned',
+                        'danger' => 'overdue',
+                    ]),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()->label('View Detail'),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make()
+                    ->button()
+                    ->color('info')
+                    ->label('View Detail')
+                    ->iconPosition(IconPosition::After),
+                Tables\Actions\EditAction::make()
+                    ->button()
+                    ->color('warning')
+                    ->label('Edit')
+                    ->iconPosition(IconPosition::After),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

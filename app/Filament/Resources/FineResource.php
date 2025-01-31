@@ -10,7 +10,9 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\IconPosition;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -72,15 +74,33 @@ class FineResource extends Resource
                     ->label('Amount')
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('status')
+                TextColumn::make('status')
                     ->label('Status')
-                    ->searchable(),
+                    ->searchable()
+                    ->badge()
+                    ->formatStateUsing(function ($state) {
+                        // Format teks status
+                        return match ($state) {
+                            'paid' => 'Paid',
+                            'unpaid' => 'Unpaid',
+                            default => $state, // Default jika nilai tidak sesuai
+                        };
+                    })
+                    ->colors([
+                        'success' => 'paid',
+                        'danger' => 'unpaid',
+                    ]),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->label('Edit')
+                    ->color('warning')
+                    ->button()
+                    ->icon('heroicon-m-pencil-square')
+                    ->iconPosition(IconPosition::After),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

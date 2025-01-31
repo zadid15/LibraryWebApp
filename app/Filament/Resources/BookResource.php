@@ -13,6 +13,7 @@ use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\IconPosition;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -115,10 +116,16 @@ class BookResource extends Resource
                     ->label('Genre')
             ])
             ->actions([
-                // Action untuk melihat detail buku
                 Tables\Actions\ViewAction::make()
-                    ->label('View Detail'),
-                Tables\Actions\EditAction::make(),
+                    ->button()
+                    ->color('info')
+                    ->label('View Detail')
+                    ->iconPosition(IconPosition::After),
+                Tables\Actions\EditAction::make()
+                    ->button()
+                    ->color('warning')
+                    ->label('Edit')
+                    ->iconPosition(IconPosition::After),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
