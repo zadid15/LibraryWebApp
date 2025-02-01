@@ -11,9 +11,11 @@ class MemberPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(User $user): Response
     {
-        return false;
+        return in_array($user->role, ['admin', 'staff']) && $user->status === 'active'
+            ? Response::allow()
+            : Response::deny();
     }
 
     /**
@@ -27,17 +29,21 @@ class MemberPolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
+    public function create(User $user): Response
     {
-        return false;
+        return in_array($user->role, ['admin', 'staff']) && $user->status === 'active'
+            ? Response::allow()
+            : Response::deny();
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Member $member): bool
+    public function update(User $user): Response
     {
-        return false;
+        return in_array($user->role, ['admin', 'staff']) && $user->status === 'active'
+            ? Response::allow()
+            : Response::deny();
     }
 
     /**
