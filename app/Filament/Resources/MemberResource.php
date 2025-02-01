@@ -76,6 +76,10 @@ class MemberResource extends Resource
                         };
                     })
                     ->badge()
+                    ->colors([
+                        'success' => 'active',
+                        'danger' => 'inactive',
+                    ])
             ])
             ->filters([
                 //
