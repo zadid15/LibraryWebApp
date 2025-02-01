@@ -12,6 +12,7 @@ use Filament\Resources\Resource;
 use Filament\Support\Enums\IconPosition;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -54,6 +55,13 @@ class BookCategoryResource extends Resource
             ])
             ->filters([
                 //
+                SelectFilter::make('category_id')  // Filter berdasarkan kategori
+                    ->label('Category')  // Label untuk filter
+                    ->options(function () {
+                        // Ambil kategori yang ada
+                        return \App\Models\Category::all()->pluck('name', 'id')->toArray();
+                    })
+                    ->placeholder('Select a category'),  // Pilihan placeholder
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
