@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\MemberResource\Pages;
-use App\Filament\Resources\MemberResource\RelationManagers;
-use App\Models\Member;
+use App\Filament\Resources\UserResource\Pages;
+use App\Filament\Resources\UserResource\RelationManagers;
+use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -17,11 +17,11 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class MemberResource extends Resource
+class UserResource extends Resource
 {
-    protected static ?string $model = Member::class;
+    protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-users';
+    protected static ?string $navigationIcon = 'heroicon-o-user';
 
     protected static ?string $navigationGroup = 'User Managements';
 
@@ -33,17 +33,26 @@ class MemberResource extends Resource
                 TextInput::make('name')
                     ->label('Name')
                     ->required(),
+
                 TextInput::make('email')
                     ->label('Email')
                     ->email()
                     ->required(),
-                TextInput::make('phone')
-                    ->label('Phone')
-                    ->tel()
+
+                TextInput::make('password')
+                    ->label('Password')
+                    ->password()
                     ->required(),
-                TextInput::make('address')
-                    ->label('Address')
+
+                Select::make('role')
+                    ->label('Role')
+                    ->options([
+                        'admin' => 'Admin',
+                        'staff' => 'Staff',
+                    ])
+                    ->default('staff')
                     ->required(),
+                
                 Select::make('status')
                     ->label('Status')
                     ->options([
@@ -52,6 +61,7 @@ class MemberResource extends Resource
                     ])
                     ->default('active')
                     ->required(),
+
             ]);
     }
 
@@ -63,8 +73,26 @@ class MemberResource extends Resource
                 TextColumn::make('name')
                     ->label('Name')
                     ->sortable(),
+
                 TextColumn::make('email')
                     ->label('Email'),
+
+                TextColumn::make('role')
+                    ->label('Role')
+                    ->formatStateUsing(function ($state) {
+                        // Format teks status
+                        return match ($state) {
+                            'staff' => 'Staff',
+                            'admin' => 'Admin',
+                            default => $state, // Default jika nilai tidak sesuai
+                        };
+                    })
+                    ->badge()
+                    ->colors([
+                        'indigo' => 'staff',
+                        'info' => 'admin',
+                    ]),
+
                 TextColumn::make('status')
                     ->label('Status')
                     ->formatStateUsing(function ($state) {
@@ -79,7 +107,7 @@ class MemberResource extends Resource
                     ->colors([
                         'success' => 'active',
                         'danger' => 'inactive',
-                    ])
+                    ]),
             ])
             ->filters([
                 //
@@ -108,9 +136,9 @@ class MemberResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListMembers::route('/'),
-            'create' => Pages\CreateMember::route('/create'),
-            'edit' => Pages\EditMember::route('/{record}/edit'),
+            'index' => Pages\ListUsers::route('/'),
+            'create' => Pages\CreateUser::route('/create'),
+            'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
 }
