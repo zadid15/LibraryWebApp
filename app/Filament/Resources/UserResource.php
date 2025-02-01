@@ -41,8 +41,9 @@ class UserResource extends Resource
 
                 TextInput::make('password')
                     ->label('Password')
-                    ->password()
-                    ->required(),
+                    ->dehydrated(false) // Jangan kirim password jika tidak diisi
+                    ->nullable() // Bisa dikosongkan jika tidak ingin mengubah
+                    ->required(fn($record) => $record === null), // Wajib diisi hanya saat membuat data baru
 
                 Select::make('role')
                     ->label('Role')
@@ -52,7 +53,7 @@ class UserResource extends Resource
                     ])
                     ->default('staff')
                     ->required(),
-                
+
                 Select::make('status')
                     ->label('Status')
                     ->options([
