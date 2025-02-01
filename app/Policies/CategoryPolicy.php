@@ -49,9 +49,11 @@ class CategoryPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Category $category): bool
+    public function delete(User $user): Response
     {
-        return false;
+        return in_array($user->role, ['admin', 'staff']) && $user->status === 'active'
+            ? Response::allow()
+            : Response::deny();
     }
 
     /**
