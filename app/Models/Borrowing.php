@@ -10,7 +10,7 @@ class Borrowing extends Model
     //
     protected $fillable = 
     [
-        'user_id',
+        'member_id',
         'book_id',
         'borrow_date',
         'due_date',
@@ -18,9 +18,9 @@ class Borrowing extends Model
         'status',
     ];
 
-    public function user(): BelongsTo
+    public function member(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Member::class);
     }
 
     public function book(): BelongsTo

@@ -32,14 +32,15 @@ class ReservationResource extends Resource
         return $form
             ->schema([
                 //
-                Select::make('user_id')
+                Select::make('member_id')
                     ->label('Borrower')
-                    ->relationship('user', 'name')
+                    ->relationship('member', 'name')
                     ->required(),
 
                 Select::make('book_id')
                     ->label('Book Title')
                     ->relationship('book', 'title')
+                    ->searchable()
                     ->required(),
 
                 DatePicker::make('reservation_date')
@@ -67,7 +68,7 @@ class ReservationResource extends Resource
         return $table
             ->columns([
                 //
-                TextColumn::make('user.name')
+                TextColumn::make('member.name')
                     ->label('Borrower')
                     ->sortable(),
 

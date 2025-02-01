@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('borrowings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('book_id');
+            $table->foreignId('member_id')->constrained('members');
+            $table->foreignId('book_id')->constrained('books');
             $table->date('borrow_date');
             $table->date('due_date');
             $table->date('return_date')->nullable();

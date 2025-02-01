@@ -10,15 +10,15 @@ class Fine extends Model
     //
     protected $fillable = 
     [
-        'user_id',
+        'member_id',
         'borrowing_id',
         'amount',
         'status'
     ];
 
-    public function user(): BelongsTo
+    public function member(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Member::class);
     }
 
     public function borrowing(): BelongsTo

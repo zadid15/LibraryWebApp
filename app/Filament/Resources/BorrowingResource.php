@@ -32,32 +32,32 @@ class BorrowingResource extends Resource
         return $form
             ->schema([
                 //
-                Select::make('user_id')
-                    ->label('Peminjam')
-                    ->relationship('user', 'name')
+                Select::make('member_id')
+                    ->label('Borrower')
+                    ->relationship('member', 'name')
                     ->required()
                     ->searchable()
                     ->preload(),
 
                 Select::make('book_id')
-                    ->label('Buku')
+                    ->label('Book Title')
                     ->relationship('book', 'title')
                     ->required()
                     ->searchable()
                     ->preload(),
 
                 DatePicker::make('borrow_date')
-                    ->label('Tanggal Peminjaman')
+                    ->label('Borrow Date')
                     ->required()
                     ->default(now()),
 
                 DatePicker::make('due_date')
-                    ->label('Tanggal Jatuh Tempo')
+                    ->label('Due Date')
                     ->required()
                     ->minDate(now()),
 
                 DatePicker::make('return_date')
-                    ->label('Tanggal Pengembalian')
+                    ->label('Return Date')
                     ->nullable(),
 
                 Select::make('status')
@@ -76,7 +76,7 @@ class BorrowingResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('user.name')
+                TextColumn::make('member.name')
                     ->label('Borrower')
                     ->sortable()
                     ->searchable(),

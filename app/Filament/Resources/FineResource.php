@@ -30,14 +30,14 @@ class FineResource extends Resource
         return $form
             ->schema([
                 //
-                Select::make('user_id')
+                Select::make('member_id')
                     ->label('Borrower')
-                    ->relationship('user', 'name')
+                    ->relationship('member', 'name')
                     ->required()
                     ->searchable(),
 
                 Select::make('borrowing_id')
-                    ->label('Borrowing')
+                    ->label('Borrowing ID')
                     ->relationship('borrowing', 'id')
                     ->searchable()
                     ->required(),
@@ -62,7 +62,7 @@ class FineResource extends Resource
         return $table
             ->columns([
                 //
-                Tables\Columns\TextColumn::make('user.name')
+                Tables\Columns\TextColumn::make('member.name')
                     ->label('Borrower')
                     ->searchable(),
 
@@ -72,7 +72,8 @@ class FineResource extends Resource
 
                 Tables\Columns\TextColumn::make('amount')
                     ->label('Amount')
-                    ->searchable(),
+                    ->numeric()
+                    ->money('IDR'),
 
                 TextColumn::make('status')
                     ->label('Status')
