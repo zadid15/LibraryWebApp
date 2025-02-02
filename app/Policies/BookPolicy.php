@@ -21,9 +21,11 @@ class BookPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Book $book): bool
+    public function view(User $user): Response
     {
-        return false;
+        return in_array($user->role, ['admin', 'staff']) && $user->status === 'active'
+            ? Response::allow()
+            : Response::deny();
     }
 
     /**

@@ -17,12 +17,12 @@ return new class extends Migration
             $table->string('author');
             $table->string('isbn')->unique();
             $table->string('publisher');
+            $table->string('language');
             $table->year('published_year');
             $table->string('genre');
-            $table->integer('total_copies');
-            $table->integer('available_copies');
+            $table->integer('number_of_pages');
             $table->string('cover_image');
-            $table->text('description');
+            $table->text('synopsis');
             $table->timestamps();
         });
     }

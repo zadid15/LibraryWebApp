@@ -35,6 +35,7 @@ class ReservationResource extends Resource
                 Select::make('member_id')
                     ->label('Borrower')
                     ->relationship('member', 'name')
+                    ->searchable()
                     ->required(),
 
                 Select::make('book_id')

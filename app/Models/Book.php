@@ -14,12 +14,12 @@ class Book extends Model
         'author',
         'isbn',
         'publisher',
+        'language',
         'published_year',
         'genre',
-        'total_copies',
-        'available_copies',
+        'number_of_pages',
         'cover_image',
-        'description'
+        'synopsis'
     ];
 
     public function borrowings(): HasMany

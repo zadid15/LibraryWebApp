@@ -33,69 +33,59 @@ class BookResource extends Resource
     {
         return $form
             ->schema([
-                // Field untuk judul buku
                 TextInput::make('title')
                     ->label('Title')
                     ->required()
                     ->maxLength(255),
 
-                // Field untuk penulis buku
                 TextInput::make('author')
                     ->label('Author')
                     ->required()
                     ->maxLength(255),
 
-                // Field untuk ISBN
-                TextInput::make('isbn')
-                    ->label('ISBN')
-                    ->required()
-                    ->unique(ignoreRecord: true) // Unique, kecuali untuk record yang sedang di-edit
-                    ->maxLength(20),
-
-                // Field untuk penerbit
-                TextInput::make('publisher')
-                    ->label('Publisher')
-                    ->required()
-                    ->maxLength(255),
-
-                // Field untuk tahun terbit
-                DatePicker::make('published_year')
-                    ->label('Published Year')
-                    ->required()
-                    ->format('Y') // Format tahun saja
-                    ->maxDate(now()), // Tidak boleh memilih tahun di masa depan
-
-                // Field untuk genre
                 TextInput::make('genre')
                     ->label('Genre')
                     ->required()
                     ->maxLength(100),
 
-                // Field untuk total salinan
-                TextInput::make('total_copies')
-                    ->label('Total Copies')
+                TextInput::make('publisher')
+                    ->label('Publisher')
+                    ->required()
+                    ->maxLength(255),
+
+                TextInput::make('number_of_pages')
+                    ->label('Number of Pages')
                     ->numeric()
                     ->required()
-                    ->minValue(1), // Minimal 1 salinan
+                    ->minValue(1),
 
-                // Field untuk salinan yang tersedia
-                TextInput::make('available_copies')
-                    ->label('Available Copies')
-                    ->numeric()
+                TextInput::make('language')
+                    ->label('Language')
                     ->required()
-                    ->minValue(0), // Minimal 0 salinan
+                    ->maxLength(255),
 
-                // Field untuk upload cover buku (opsional)
+                DatePicker::make('published_year')
+                    ->label('Published Year')
+                    ->required()
+                    ->format('Y')
+                    ->maxDate(now()),
+
+                TextInput::make('isbn')
+                    ->label('ISBN')
+                    ->required()
+                    ->unique(ignoreRecord: true)
+                    ->maxLength(20),
+
+
                 FileUpload::make('cover_image')
                     ->label('Cover Image')
-                    ->directory('book-covers') // Folder penyimpanan
+                    ->directory('book-covers')
                     ->image()
-                    ->maxSize(2048) // Maksimal 2MB
+                    ->maxSize(2048)
                     ->nullable(),
 
-                // Field untuk deskripsi buku (opsional)
-                RichEditor::make('description')
-                    ->label('Decription')
+                    RichEditor::make('synopsis')
+                    ->label('Synopsis')
                     ->nullable(),
             ]);
     }
