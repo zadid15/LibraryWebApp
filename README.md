@@ -65,8 +65,3 @@ If you’d like to contribute, please follow these steps:
 2. Create a new branch (`feature/new-feature`).
 3. Commit changes and push to your fork.
 4. Submit a pull request.
-
-## License
-
-This project is licensed under the **MIT License**.
-
