@@ -100,10 +100,12 @@ class BookResource extends Resource
                     ->sortable(),
 
                 TextColumn::make('author')
-                    ->label('Author'),
+                    ->label('Author')
+                    ->searchable(),
 
                 TextColumn::make('genre')
                     ->label('Genre')
+                    ->searchable(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()
