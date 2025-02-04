@@ -12,8 +12,8 @@ class Book extends Model
     [
         'title',
         'author',
-        'isbn',
         'publisher',
+        'isbn',
         'language',
         'published_year',
         'genre',
