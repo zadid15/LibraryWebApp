@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('number_of_pages');
             $table->string('cover_image');
             $table->text('synopsis');
+            $table->string('slug')->unique();
             $table->timestamps();
         });
     }

@@ -25,7 +25,8 @@ class BookResource extends JsonResource
             'genre' => $this->genre,
             'number_of_pages' => $this->number_of_pages,
             'cover_image' => $this->cover_image,
-            'synopsis' => $this->synopsis
+            'slug' => $this->slug,
+            'synopsis' => $this->synopsis,
         ];
     }
 }

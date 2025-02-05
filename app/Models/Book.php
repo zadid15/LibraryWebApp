@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Book extends Model
 {
@@ -19,8 +20,15 @@ class Book extends Model
         'genre',
         'number_of_pages',
         'cover_image',
-        'synopsis'
+        'synopsis',
+        'slug'
     ];
+
+    public function setTitleAttribute($value)
+    {
+        $this->attributes['title'] = $value;
+        $this->attributes['slug'] = Str::slug($value);
+    }
 
     public function borrowings(): HasMany
     {
